@@ -68,10 +68,3 @@ Steps:
 
 ---
 
-Would you like me to also create a **fancier version** with badges like:  
-![GitHub repo stars](https://img.shields.io/github/stars/krushna001m/Equi-Link?style=social)  
-and  
-![GitHub last commit](https://img.shields.io/github/last-commit/krushna001m/Equi-Link)?
-
-It'll make your repo look even cooler! 🚀  
-Should I? 🎨
