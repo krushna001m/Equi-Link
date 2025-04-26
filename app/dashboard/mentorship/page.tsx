@@ -29,6 +29,9 @@ export default function MentorshipPage() {
   const [activeTab, setActiveTab] = useState("find")
   const [searchQuery, setSearchQuery] = useState("")
   const [industryFilter, setIndustryFilter] = useState("")
+  const [expertiseArea, setExpertiseArea] = useState("")
+  const [experienceYears, setExperienceYears] = useState("")
+  const [availabilityHours, setAvailabilityHours] = useState("")
   const [availableMentors, setAvailableMentors] = useState<Mentor[]>(mentors)
   const [myMentors, setMyMentors] = useState<Mentor[]>(userMentors)
   const [isLoading, setIsLoading] = useState(true)
@@ -165,7 +168,7 @@ export default function MentorshipPage() {
                   <SelectValue placeholder="Industry" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Industries</SelectItem>
+                  <SelectItem value="all">All Industries</SelectItem>
                   <SelectItem value="tech">Technology</SelectItem>
                   <SelectItem value="healthcare">Healthcare</SelectItem>
                   <SelectItem value="education">Education</SelectItem>
@@ -354,7 +357,7 @@ export default function MentorshipPage() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="expertise">Areas of Expertise</Label>
-                  <Select>
+                  <Select value={expertiseArea} onValueChange={setExpertiseArea}>
                     <SelectTrigger id="expertise">
                       <SelectValue placeholder="Select your primary area of expertise" />
                     </SelectTrigger>
@@ -370,7 +373,7 @@ export default function MentorshipPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="experience">Years of Experience</Label>
-                  <Select>
+                  <Select value={experienceYears} onValueChange={setExperienceYears}>
                     <SelectTrigger id="experience">
                       <SelectValue placeholder="Select your experience level" />
                     </SelectTrigger>
@@ -394,7 +397,7 @@ export default function MentorshipPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="availability">Availability</Label>
-                  <Select>
+                  <Select value={availabilityHours} onValueChange={setAvailabilityHours}>
                     <SelectTrigger id="availability">
                       <SelectValue placeholder="Select your availability" />
                     </SelectTrigger>
