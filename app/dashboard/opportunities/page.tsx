@@ -86,11 +86,11 @@ export default function OpportunitiesPage() {
   const applyFilters = () => {
     let filtered = [...jobs]
 
-    if (jobTypeFilter) {
+    if (jobTypeFilter && jobTypeFilter !== "all") {
       filtered = filtered.filter((job) => job.type === jobTypeFilter)
     }
 
-    if (locationFilter) {
+    if (locationFilter && locationFilter !== "all") {
       filtered = filtered.filter((job) => job.mode === locationFilter)
     }
 
