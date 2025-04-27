@@ -7,6 +7,10 @@ Equi-Link is a web platform designed to bridge the gap of inequality by providin
 Built with a focus on **Gender Equality (SDG 5)** and **Reduced Inequalities (SDG 10)**, Equi-Link is user-friendly, community-driven, and accessibility-focused.
 
 ---
+## 🌍 Live Demo
+👉 [**View**](https://v0-equi-link-project.vercel.app/)  
+
+---
 
 ## ✨ Features
 
