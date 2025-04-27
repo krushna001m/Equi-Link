@@ -111,42 +111,6 @@ export default function LearningPage() {
           </div>
         </TabsContent>
 
-        <TabsContent value="popular" className="space-y-4">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Card key={i} className="overflow-hidden">
-                <div className="aspect-video bg-gradient-to-r from-blue-500 to-blue-700 relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <BookOpen className="h-12 w-12 text-white opacity-75" />
-                  </div>
-                </div>
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between">
-                    <Badge variant="secondary">Popular</Badge>
-                    <div className="flex items-center gap-1 text-sm">
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      <span>4.9</span>
-                    </div>
-                  </div>
-                  <CardTitle className="text-lg mt-2">Popular Course Title</CardTitle>
-                  <CardDescription>Provider Name</CardDescription>
-                </CardHeader>
-                <CardContent className="pb-2">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                    <Clock className="h-3.5 w-3.5" />
-                    <span>Duration • Hours/week</span>
-                  </div>
-                  <p className="text-sm">Brief course description highlighting key topics and skills covered.</p>
-                </CardContent>
-                <CardFooter className="flex justify-between">
-                  <div className="text-sm font-medium text-green-600">Free</div>
-                  <Button>Enroll Now</Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-
         <TabsContent value="my-learning" className="space-y-4">
           <div className="rounded-lg border bg-card p-6">
             <h3 className="text-lg font-medium mb-4">Your Enrolled Courses</h3>
@@ -181,43 +145,41 @@ export default function LearningPage() {
               </div>
             </div>
           </div>
+        </TabsContent>
 
-          <div className="rounded-lg border bg-card p-6">
-            <h3 className="text-lg font-medium mb-4">Recommended Next Steps</h3>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <Card>
+        <TabsContent value="popular" className="space-y-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Card key={i} className="overflow-hidden">
+                <div className="aspect-video bg-gradient-to-r from-blue-500 to-blue-700 relative">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <BookOpen className="h-12 w-12 text-white opacity-75" />
+                  </div>
+                </div>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">Advanced CSS Techniques</CardTitle>
-                  <CardDescription>Code Academy</CardDescription>
+                  <div className="flex justify-between">
+                    <Badge variant="secondary">Popular</Badge>
+                    <div className="flex items-center gap-1 text-sm">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <span>4.9</span>
+                    </div>
+                  </div>
+                  <CardTitle className="text-lg mt-2">Popular Course Title</CardTitle>
+                  <CardDescription>Provider Name</CardDescription>
                 </CardHeader>
                 <CardContent className="pb-2">
-                  <p className="text-sm">
-                    Take your CSS skills to the next level with advanced techniques and frameworks.
-                  </p>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                    <Clock className="h-3.5 w-3.5" />
+                    <span>Duration • Hours/week</span>
+                  </div>
+                  <p className="text-sm">Brief course description highlighting key topics and skills covered.</p>
                 </CardContent>
-                <CardFooter>
-                  <Button variant="outline" className="w-full">
-                    View Course
-                  </Button>
+                <CardFooter className="flex justify-between">
+                  <div className="text-sm font-medium text-green-600">Free</div>
+                  <Button>Enroll Now</Button>
                 </CardFooter>
               </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">JavaScript for Beginners</CardTitle>
-                  <CardDescription>Code Academy</CardDescription>
-                </CardHeader>
-                <CardContent className="pb-2">
-                  <p className="text-sm">Learn the fundamentals of JavaScript programming for web development.</p>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" className="w-full">
-                    View Course
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
+            ))}
           </div>
         </TabsContent>
 
