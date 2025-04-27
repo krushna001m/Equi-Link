@@ -2,9 +2,9 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import {
   SidebarProvider,
   Sidebar,
@@ -39,13 +39,11 @@ import { Input } from "@/components/ui/input"
 import { useAuth } from "@/lib/auth"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+// Create a separate component for the parts that use useSearchParams
+function DashboardContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { user, logout } = useAuth()
   const [notifications, setNotifications] = useState(3)
   const [searchQuery, setSearchQuery] = useState("")
@@ -208,8 +206,8 @@ export default function DashboardLayout({
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Log out" onClick={handleLogout}>
-                  <button>
+                <SidebarMenuButton tooltip="Log out">
+                  <button onClick={handleLogout}>
                     <LogOut className="h-4 w-4" />
                     <span>Log out</span>
                   </button>
@@ -295,5 +293,17 @@ export default function DashboardLayout({
         </SidebarInset>
       </div>
     </SidebarProvider>
+  )
+}
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <Suspense fallback={<div className="p-6">Loading dashboard...</div>}>
+      <DashboardContent>{children}</DashboardContent>
+    </Suspense>
   )
 }
