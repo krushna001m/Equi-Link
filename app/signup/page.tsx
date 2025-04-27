@@ -11,13 +11,13 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ArrowLeft } from "lucide-react"
-import { useAuth } from "@/lib/auth"
 import { useToast } from "@/components/ui/use-toast"
 
 export default function SignupPage() {
   const router = useRouter()
-  const { signup, isLoading, error } = useAuth()
   const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -38,20 +38,23 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsLoading(true)
+    setError(null)
 
     try {
-      await signup({
-        name: `${formData.firstName} ${formData.lastName}`,
-        email: formData.email,
-        userType: formData.userType as any,
-      })
+      // Simulate signup
+      await new Promise((resolve) => setTimeout(resolve, 1000))
 
       toast({
         title: "Account created successfully",
         description: "Welcome to EquiLink!",
       })
+
+      router.push("/dashboard")
     } catch (err) {
-      // Error is handled by the auth context
+      setError("An error occurred during signup")
+    } finally {
+      setIsLoading(false)
     }
   }
 
