@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -8,20 +8,81 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowRight, BookOpen, Briefcase, Calendar, Users } from "lucide-react"
 import Link from "next/link"
-import { useAuth } from "@/lib/auth"
 import { useToast } from "@/components/ui/use-toast"
-import type { Course, Discussion, Job, Mentor } from "@/lib/types"
-import { courses, discussions, jobs, mentors } from "@/lib/data"
 
 export default function DashboardPage() {
-  const { user } = useAuth()
   const { toast } = useToast()
   const [activeTab, setActiveTab] = useState("recommended")
-  const [recommendedMentors, setRecommendedMentors] = useState<Mentor[]>([])
-  const [recommendedJobs, setRecommendedJobs] = useState<Job[]>([])
-  const [recommendedCourses, setRecommendedCourses] = useState<Course[]>([])
-  const [recentDiscussions, setRecentDiscussions] = useState<Discussion[]>([])
   const [isLoading, setIsLoading] = useState(true)
+
+  // Mock data
+  const user = {
+    name: "Jane Cooper",
+    email: "jane@example.com",
+    image: "/placeholder.svg?height=40&width=40&text=JC",
+  }
+
+  const recommendedMentors = [
+    {
+      id: "mentor-1",
+      name: "Sarah Miller",
+      title: "Senior Product Manager",
+      company: "TechCorp",
+      image: "/placeholder.svg?height=96&width=96&text=SM",
+      bio: "Helping women transition into tech leadership roles with 10+ years of experience.",
+    },
+  ]
+
+  const recommendedJobs = [
+    {
+      id: "job-1",
+      title: "UX Designer",
+      company: "Inclusive Tech Co.",
+      companyLogo: "/placeholder.svg?height=40&width=40&text=IT",
+      location: "San Francisco, CA (Remote)",
+      description: "Design user-centered experiences for web and mobile applications in an inclusive environment.",
+    },
+  ]
+
+  const recommendedCourses = [
+    {
+      id: "course-1",
+      title: "Web Development Fundamentals",
+      provider: "Code Academy",
+      description: "Learn HTML, CSS, and JavaScript basics for building responsive websites.",
+      duration: { weeks: 8 },
+    },
+  ]
+
+  const recentDiscussions = [
+    {
+      id: "discussion-1",
+      title: "Tips for negotiating salary as a woman in tech?",
+      author: {
+        name: "Jane Cooper",
+        image: "/placeholder.svg?height=40&width=40&text=JC",
+      },
+      createdAt: new Date("2023-04-10"),
+    },
+    {
+      id: "discussion-2",
+      title: "Resources for self-taught developers from underrepresented groups",
+      author: {
+        name: "Alex Johnson",
+        image: "/placeholder.svg?height=40&width=40&text=AJ",
+      },
+      createdAt: new Date("2023-04-07"),
+    },
+    {
+      id: "discussion-3",
+      title: "How to find mentors who understand your unique challenges",
+      author: {
+        name: "Maria Rodriguez",
+        image: "/placeholder.svg?height=40&width=40&text=MR",
+      },
+      createdAt: new Date("2023-04-04"),
+    },
+  ]
 
   useEffect(() => {
     // Simulate API calls to fetch personalized recommendations
@@ -30,12 +91,6 @@ export default function DashboardPage() {
       try {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1000))
-
-        // For demo purposes, we'll use the mock data
-        setRecommendedMentors(mentors.slice(0, 3))
-        setRecommendedJobs(jobs.slice(0, 3))
-        setRecommendedCourses(courses.slice(0, 3))
-        setRecentDiscussions(discussions.slice(0, 3))
       } catch (error) {
         console.error("Error fetching recommendations:", error)
         toast({
@@ -58,10 +113,6 @@ export default function DashboardPage() {
     })
   }
 
-  const handleFindOpportunities = () => {
-    window.location.href = "/dashboard/opportunities"
-  }
-
   const formatTimeAgo = (date: Date) => {
     const now = new Date()
     const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60))
@@ -77,14 +128,14 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">Welcome back, {user?.name.split(" ")[0]}!</h2>
+          <h2 className="text-2xl font-bold tracking-tight">Welcome back, {user.name.split(" ")[0]}!</h2>
           <p className="text-muted-foreground">Here's what's happening with your EquiLink account today.</p>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" onClick={handleCompleteProfile}>
             Complete Profile
           </Button>
-          <Button onClick={handleFindOpportunities}>Find Opportunities</Button>
+          <Button>Find Opportunities</Button>
         </div>
       </div>
 
@@ -280,89 +331,31 @@ export default function DashboardPage() {
 
         <TabsContent value="mentors" className="space-y-4">
           <h3 className="text-lg font-medium">Available Mentors</h3>
-
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {recommendedMentors.map((mentor, i) => (
-              <Card key={mentor.id}>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">{mentor.name}</CardTitle>
-                  <CardDescription>
-                    {mentor.title} at {mentor.company}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-4 pt-2">
-                    <Avatar>
-                      <AvatarImage src={mentor.image || "/placeholder.svg"} alt={mentor.name} />
-                      <AvatarFallback>{mentor.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-sm font-medium">{mentor.name}</p>
-                      <p className="text-xs text-muted-foreground">{mentor.bio.substring(0, 60)}...</p>
-                    </div>
-                  </div>
-                  <div className="mt-4 flex justify-end">
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href="/dashboard/mentorship">
-                        View Profile <ArrowRight className="ml-2 h-3 w-3" />
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="text-center py-8">
+            <p className="text-muted-foreground mb-4">Select the "Mentorship" tab to view available mentors.</p>
+            <Button asChild>
+              <Link href="/dashboard/mentorship">Go to Mentorship</Link>
+            </Button>
           </div>
         </TabsContent>
 
         <TabsContent value="jobs" className="space-y-4">
           <h3 className="text-lg font-medium">Job Opportunities</h3>
-
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {recommendedJobs.map((job, i) => (
-              <Card key={job.id}>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">{job.title}</CardTitle>
-                  <CardDescription>
-                    {job.company} - {job.location}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm">{job.description.substring(0, 100)}...</p>
-                  <div className="mt-4 flex justify-end">
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href="/dashboard/opportunities">
-                        Apply Now <ArrowRight className="ml-2 h-3 w-3" />
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="text-center py-8">
+            <p className="text-muted-foreground mb-4">Select the "Opportunities" tab to view available jobs.</p>
+            <Button asChild>
+              <Link href="/dashboard/opportunities">Go to Opportunities</Link>
+            </Button>
           </div>
         </TabsContent>
 
         <TabsContent value="resources" className="space-y-4">
           <h3 className="text-lg font-medium">Learning Resources</h3>
-
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {recommendedCourses.map((course, i) => (
-              <Card key={course.id}>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">{course.title}</CardTitle>
-                  <CardDescription>{course.provider}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm">{course.description}</p>
-                  <div className="mt-4 flex justify-end">
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href="/dashboard/learning">
-                        Access Resource <ArrowRight className="ml-2 h-3 w-3" />
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="text-center py-8">
+            <p className="text-muted-foreground mb-4">Select the "Learning Hub" tab to view educational resources.</p>
+            <Button asChild>
+              <Link href="/dashboard/learning">Go to Learning Hub</Link>
+            </Button>
           </div>
         </TabsContent>
       </Tabs>
@@ -370,7 +363,7 @@ export default function DashboardPage() {
       <div className="rounded-lg border bg-card p-6">
         <h3 className="text-lg font-medium mb-4">Community Activity</h3>
         <div className="space-y-4">
-          {recentDiscussions.map((discussion, i) => (
+          {recentDiscussions.map((discussion) => (
             <div key={discussion.id} className="flex items-start gap-4 pb-4 border-b last:border-0 last:pb-0">
               <Avatar>
                 <AvatarImage src={discussion.author.image || "/placeholder.svg"} alt={discussion.author.name} />
