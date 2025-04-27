@@ -10,13 +10,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowLeft } from "lucide-react"
-import { useAuth } from "@/lib/auth"
 import { useToast } from "@/components/ui/use-toast"
 
 export default function LoginPage() {
   const router = useRouter()
-  const { login, isLoading, error } = useAuth()
   const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const [formData, setFormData] = useState({
     email: "",
@@ -30,16 +30,24 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsLoading(true)
+    setError(null)
 
     try {
-      await login(formData.email, formData.password)
-      // If no error is thrown, login was successful
+      // Simulate login
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+
+      // For demo purposes, accept any login
       toast({
         title: "Login successful",
         description: "Welcome back to EquiLink!",
       })
+
+      router.push("/dashboard")
     } catch (err) {
-      // Error is handled by the auth context
+      setError("Invalid email or password")
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -74,12 +82,12 @@ export default function LoginPage() {
                   onChange={handleChange}
                   required
                 />
-                <div className="text-xs text-muted-foreground">For demo: use jane@example.com</div>
+                <div className="text-xs text-muted-foreground">For demo: use any email</div>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <Link href="/forgot-password" className="text-xs text-purple-600 hover:underline">
+                  <Link href="#" className="text-xs text-purple-600 hover:underline">
                     Forgot password?
                   </Link>
                 </div>
