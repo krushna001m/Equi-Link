@@ -1,7 +1,5 @@
 
-# Equi-Link
-
- **Empowering Inclusion, One Click at a Time**
+# Equi-Link  **Empowering Inclusion, One Click at a Time**
 
 Equi-Link is a web platform designed to bridge the gap of inequality by providing easy access to resources, communities, and opportunities — especially for underrepresented groups.  
 Built with a focus on **Gender Equality (SDG 5)** and **Reduced Inequalities (SDG 10)**, Equi-Link is user-friendly, community-driven, and accessibility-focused.
