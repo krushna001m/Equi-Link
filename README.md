@@ -69,4 +69,7 @@ Steps:
 # 🌟 Let's make the world more inclusive, together!
 
 ---
+## 👨‍💻 Author
 
+* **Krushna Mengal**
+  GitHub: [@krushna001m](https://github.com/krushna001m)
